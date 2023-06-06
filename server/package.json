@@ -15,6 +15,7 @@
     "prisma:migrate": "prisma migrate dev --preview-feature",
     "prisma:generate": "prisma generate",
     "compile": "tsc && node --es-module-specifier-resolution=node ./dist/index.js",
+    "prestart:dev": "rimraf dist/",
     "start:dev": "./node_modules/nodemon/bin/nodemon.js -e ts --exec \"npm run compile\""
   },
   "keywords": [
@@ -41,6 +42,7 @@
     "@types/node": "^20.2.5",
     "nodemon": "^2.0.22",
     "prisma": "^4.15.0",
+    "rimraf": "^5.0.1",
     "ts-node": "^10.9.1",
     "typescript": "^5.1.3"
   }
