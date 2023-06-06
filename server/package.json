@@ -1,0 +1,47 @@
+{
+  "name": "@ndttt/server",
+  "version": "1.0.0",
+  "private": true,
+  "description": "",
+  "engines": {
+    "node": ">=v18.0.0 <19",
+    "npm": "~9.5.1"
+  },
+  "types": "src/index.ts",
+  "main": "dist/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "prisma:init": "prisma init",
+    "prisma:migrate": "prisma migrate dev --preview-feature",
+    "prisma:generate": "prisma generate",
+    "compile": "tsc && node --es-module-specifier-resolution=node ./dist/index.js",
+    "start:dev": "./node_modules/nodemon/bin/nodemon.js -e ts --exec \"npm run compile\""
+  },
+  "keywords": [
+    "tic-tac-toe",
+    "graphql",
+    "apollo",
+    "prisma",
+    "postgres"
+  ],
+  "author": "Bhavin Chandarana",
+  "license": "MIT",
+  "type": "module",
+  "dependencies": {
+    "@apollo/server": "^4.7.1",
+    "@graphql-tools/graphql-file-loader": "^8.0.0",
+    "@graphql-tools/load": "^8.0.0",
+    "@graphql-tools/schema": "^10.0.0",
+    "@prisma/client": "^4.15.0",
+    "graphql": "^16.6.0",
+    "graphql-constraint-directive": "^5.1.1",
+    "graphql-tag": "^2.12.6"
+  },
+  "devDependencies": {
+    "@types/node": "^20.2.5",
+    "nodemon": "^2.0.22",
+    "prisma": "^4.15.0",
+    "ts-node": "^10.9.1",
+    "typescript": "^5.1.3"
+  }
+}

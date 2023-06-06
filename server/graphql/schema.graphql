@@ -1,0 +1,25 @@
+# Comments in GraphQL strings (such as this one) start with the hash (#) symbol.
+
+# This "Book" type defines the queryable fields for every book in our data source.
+input CreateUserInput {
+  email: String! @constraint(format: "email", maxLength: 255)
+  username: String! @constraint(maxLength: 255, minLength: 3)
+  name: String! @constraint(pattern: "^[0-9a-zA-Z ]*$", maxLength: 255)
+  password: String! @constraint(maxLength: 255, minLength: 8)
+}
+
+type User {
+  id: ID!
+  email: String!
+  username: String!
+  name: String!
+}
+
+type Query {
+  users: [User]
+  user(id: ID!): User
+}
+
+type Mutation {
+  createUser(input: CreateUserInput): User!
+}
