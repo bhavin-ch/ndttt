@@ -8,18 +8,33 @@ input CreateUserInput {
   password: String! @constraint(maxLength: 255, minLength: 8)
 }
 
+input LoginInput {
+  username: String!
+  password: String!
+}
+
 type User {
   id: ID!
   email: String!
   username: String!
   name: String!
+  roles: [Role]
 }
 
 type Query {
-  users: [User]
-  user(id: ID!): User
+  users: [User] @auth(roles: ["USER"])
+  user(id: ID!): User @auth(roles: ["USER"])
 }
 
 type Mutation {
-  createUser(input: CreateUserInput): User!
+  createUser(input: CreateUserInput): User! @auth(roles: ["USER"])
+  login(input: LoginInput): String!
+}
+
+directive @auth(roles: [String!]) on FIELD_DEFINITION
+
+enum Role {
+  USER,
+  ADMIN,
+  ANON,
 }

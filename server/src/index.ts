@@ -1,10 +1,11 @@
 import { ApolloServer } from '@apollo/server';
-import { makeExecutableSchema } from '@graphql-tools/schema';
-import { createApollo4QueryValidationPlugin, constraintDirectiveTypeDefs } from 'graphql-constraint-directive/apollo4';
 import { startStandaloneServer } from '@apollo/server/standalone';
+import { makeExecutableSchema } from '@graphql-tools/schema';
 import { readFileSync } from 'fs';
+import { constraintDirectiveTypeDefs, createApollo4QueryValidationPlugin } from 'graphql-constraint-directive/apollo4';
+import { invoke } from './directives/auth';
 import { resolvers } from './resolvers';
-import { init } from './services';
+import { authenticate, init } from './services';
 
 (async () => {
   // init prisma
@@ -12,10 +13,11 @@ import { init } from './services';
 
   // set-up constraint directives
   const typeDefs = `${readFileSync(`${process.cwd()}/graphql/schema.graphql`, 'utf-8')}`;
-  const schema = makeExecutableSchema({
+  let schema = makeExecutableSchema({
     typeDefs: [constraintDirectiveTypeDefs, typeDefs],
     resolvers,
-  })
+  });
+  schema = invoke(schema);
 
   // set-up apollo server
   const server = new ApolloServer({
@@ -28,6 +30,15 @@ import { init } from './services';
   // init apollo server
   const { url } = await startStandaloneServer(server, {
     listen: { port: 4000 },
+    context: async ({ req, res }) => {
+      const match = req.headers.authorization?.match(/Bearer (.*)/) ?? null;
+      if (!match) {
+        return { auth: false};
+      }
+      const [_, token] = match;
+      const user = await authenticate(token);
+      return { auth: true, user };
+    },
   });
   console.log(`🚀  Server ready at: ${url}`);
 })()

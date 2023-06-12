@@ -33,12 +33,15 @@
     "@graphql-tools/graphql-file-loader": "^8.0.0",
     "@graphql-tools/load": "^8.0.0",
     "@graphql-tools/schema": "^10.0.0",
+    "@graphql-tools/utils": "^10.0.1",
     "@prisma/client": "^4.15.0",
     "graphql": "^16.6.0",
     "graphql-constraint-directive": "^5.1.1",
-    "graphql-tag": "^2.12.6"
+    "graphql-tag": "^2.12.6",
+    "jsonwebtoken": "^9.0.0"
   },
   "devDependencies": {
+    "@types/jsonwebtoken": "^9.0.2",
     "@types/node": "^20.2.5",
     "nodemon": "^2.0.22",
     "prisma": "^4.15.0",
