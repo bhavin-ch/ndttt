@@ -17,6 +17,32 @@ model User {
   name  String
   password  String?
   roles Role[] @default([USER])
+  gamesCreated Game[] @relation("creator")
+  gamesJoined Game[] @relation("joiner")
+  gamesWon Game[] @relation("winner")
+}
+
+model Game {
+  id String @id @default(uuid())
+  creator User @relation("creator", fields: [creatorId], references: [id])
+  creatorId String
+  dimensions Int
+  gridSize Int
+  joiner User? @relation("joiner", fields: [joinerId], references: [id])
+  joinerId String?
+  winner User? @relation("winner", fields: [winnerId], references: [id])
+  winnerId String?
+  status Status @default(CREATED)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+enum Status {
+  CREATED
+  READY
+  STARTED
+  ARCHIVED
+  FINISHED
 }
 
 enum Role {
