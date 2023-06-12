@@ -1,11 +1,15 @@
-# Comments in GraphQL strings (such as this one) start with the hash (#) symbol.
+scalar Date
 
-# This "Book" type defines the queryable fields for every book in our data source.
 input CreateUserInput {
   email: String! @constraint(format: "email", maxLength: 255)
   username: String! @constraint(maxLength: 255, minLength: 3)
   name: String! @constraint(pattern: "^[0-9a-zA-Z ]*$", maxLength: 255)
   password: String! @constraint(maxLength: 255, minLength: 8)
+}
+input CreateGameInput {
+  creatorId: String!
+  dimensions: Int!
+  gridSize: Int!
 }
 
 input LoginInput {
@@ -21,14 +25,26 @@ type User {
   roles: [Role]
 }
 
+type Game {
+  id: ID!
+  creator: User!
+  joiner: User
+  winner: User
+  status: Status!
+  createdAt: Date!
+  updatedAt: Date!
+}
+
 type Query {
   users: [User] @auth(roles: ["USER"])
   user(id: ID!): User @auth(roles: ["USER"])
+  games: [Game] @auth(roles: ["USER"])
 }
 
 type Mutation {
-  createUser(input: CreateUserInput): User! @auth(roles: ["USER"])
   login(input: LoginInput): String!
+  createUser(input: CreateUserInput): User! @auth(roles: ["USER"])
+  createGame(input: CreateGameInput): Game! @auth(roles: ["USER"])
 }
 
 directive @auth(roles: [String!]) on FIELD_DEFINITION
@@ -37,4 +53,12 @@ enum Role {
   USER,
   ADMIN,
   ANON,
+}
+
+enum Status {
+  CREATED,
+  READY,
+  STARTED,
+  ARCHIVED,
+  FINISHED,
 }
