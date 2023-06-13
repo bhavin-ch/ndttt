@@ -21,7 +21,6 @@ export const createGame = async (input: CreateGameInput): Promise<Game> => {
       creator: true
     }
   });
-  console.log(game);
   return game;
 };
 

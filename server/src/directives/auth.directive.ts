@@ -1,7 +1,7 @@
 import { MapperKind, getDirective, mapSchema } from '@graphql-tools/utils';
 import { Role, User } from '@prisma/client';
 import { GraphQLError, defaultFieldResolver } from 'graphql';
-import { AuthenticationError, AuthorizationError } from '../utils/error';
+import { AuthenticationError, AuthorizationError } from '../utils/error.util';
 
 export const invoke = (schema) => {
   const authorizedSchema = mapSchema(schema, {

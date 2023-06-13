@@ -1,6 +1,6 @@
 import { Prisma, PrismaClient } from '@prisma/client';
 import { CreateUserInput } from '../types';
-import { generateHash } from '../utils/auth';
+import { generateHash } from '../utils/auth.util';
 import { User } from '@prisma/client';
 
 let UserModel: Prisma.UserDelegate<unknown>;

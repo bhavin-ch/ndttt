@@ -3,7 +3,7 @@ import { startStandaloneServer } from '@apollo/server/standalone';
 import { makeExecutableSchema } from '@graphql-tools/schema';
 import { readFileSync } from 'fs';
 import { constraintDirectiveTypeDefs, createApollo4QueryValidationPlugin } from 'graphql-constraint-directive/apollo4';
-import { invoke } from './directives/auth';
+import { invoke } from './directives/auth.directive';
 import { resolvers } from './resolvers';
 import { authenticate, init } from './services';
 

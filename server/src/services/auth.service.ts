@@ -1,7 +1,7 @@
 import { Prisma, PrismaClient } from "@prisma/client";
 import jwt from 'jsonwebtoken';
-import { compareHash } from "../utils/auth";
-import { AuthenticationError } from "../utils/error";
+import { compareHash } from "../utils/auth.util";
+import { AuthenticationError } from "../utils/error.util";
 
 interface JwtPayload {
   userid: string;
