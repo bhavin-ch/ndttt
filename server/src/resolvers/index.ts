@@ -1,4 +1,4 @@
-import { ResolveTree, parseResolveInfo, simplifyParsedResolveInfoFragmentWithType } from 'graphql-parse-resolve-info';
+import { GraphQLResolveInfo } from 'graphql';
 import {
   createGame,
   createUser,
@@ -7,9 +7,8 @@ import {
   getUserById,
   login,
 } from '../services';
-import { DateScalar } from './date.resolver';
-import { GraphQLResolveInfo } from 'graphql';
 import { buildQuery } from '../utils/resolver.util';
+import { DateScalar } from './date.resolver';
 
 export const resolvers = {
   Date: DateScalar,
