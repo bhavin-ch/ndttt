@@ -9,7 +9,7 @@ export const initGamesService = (client: PrismaClient) => {
   UserModel = client.user;
 }
 
-export const createGame = async (input: CreateGameInput): Promise<Game> => {
+export const createGame = async (input: CreateGameInput, select: Prisma.GameSelect): Promise<Partial<Game>> => {
   const { creatorId, dimensions, gridSize } = input;
   const game = await GameModel.create({
     data: {
@@ -17,13 +17,11 @@ export const createGame = async (input: CreateGameInput): Promise<Game> => {
       dimensions,
       gridSize
     },
-    include: {
-      creator: true
-    }
+    select,
   });
   return game;
 };
 
-export const getAllGames = async (): Promise<Game[]> => {
-  return await GameModel.findMany();
+export const getAllGames = async (select: Prisma.GameSelect): Promise<Partial<Game>[]> => {
+  return await GameModel.findMany({ select });
 };

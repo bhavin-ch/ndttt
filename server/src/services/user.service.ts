@@ -1,13 +1,12 @@
-import { Prisma, PrismaClient } from '@prisma/client';
+import { Prisma, PrismaClient, User } from '@prisma/client';
 import { CreateUserInput } from '../types';
 import { generateHash } from '../utils/auth.util';
-import { User } from '@prisma/client';
 
 let UserModel: Prisma.UserDelegate<unknown>;
 
 export const initUsersService = (client: PrismaClient) => UserModel = client.user;
 
-export const createUser = async (input: CreateUserInput): Promise<User> => {
+export const createUser = async (input: CreateUserInput, select: Prisma.UserSelect): Promise<Partial<User>> => {
   const { password, email, username, name } = input;
   const passwordHash = await generateHash(password);
   const user = await UserModel.create({
@@ -16,19 +15,21 @@ export const createUser = async (input: CreateUserInput): Promise<User> => {
       username,
       name,
       password: passwordHash
-    }
+    },
+    select,
   });
   return user;
 };
 
-export const getAllUsers = async (): Promise<User[]> => {
-  return await UserModel.findMany();
+export const getAllUsers = async (select: Prisma.UserSelect): Promise<Partial<User>[]> => {
+  return await UserModel.findMany({ select });
 };
 
-export const getUserById = async (id: string): Promise<User> => {
+export const getUserById = async (id: string, select: Prisma.UserSelect): Promise<Partial<User>> => {
   return await UserModel.findUnique({
     where: {
       id,
-    }
+    },
+    select,
   });
 };

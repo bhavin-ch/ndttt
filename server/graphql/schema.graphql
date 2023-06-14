@@ -23,11 +23,16 @@ type User {
   username: String!
   name: String!
   roles: [Role]
+  gamesCreated: [Game]!
+  gamesJoined: [Game]!
+  gamesWon: [Game]!
 }
 
 type Game {
   id: ID!
   creator: User!
+  dimensions: Int!
+  gridSize: Int!
   joiner: User
   winner: User
   status: Status!
