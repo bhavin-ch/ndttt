@@ -13,29 +13,19 @@ import { DateScalar } from './date.resolver';
 export const resolvers = {
   Date: DateScalar,
   Query: {
-    users: async (_parent: any, _args: any, _context: any, info: GraphQLResolveInfo) => {
-      const select = buildQuery(info);
-      return getAllUsers(select)
-    },
-    user: async (_: any, { id }: any, _context: any, info: GraphQLResolveInfo) => {
-      const select = buildQuery(info);
-      getUserById(id, select);
-    },
-    games: async (_parent: any, _args: any, _context: any, info: GraphQLResolveInfo) => {      
-      const select = buildQuery(info);
-      return getAllGames(select);
-    },
+    users: async (_parent: any, _args: unknown, _context: unknown, info: GraphQLResolveInfo) => 
+      getAllUsers(buildQuery(info)),
+    user: async (_parent: unknown, { id }: any, _context: unknown, info: GraphQLResolveInfo) => 
+      getUserById(id, buildQuery(info)),
+    games: async (_parent: unknown, _args: unknown, _context: unknown, info: GraphQLResolveInfo) => 
+      getAllGames(buildQuery(info)),
   },
   Mutation: {
-    createUser: (_parent: any, { input }: any, _context: any, info: GraphQLResolveInfo) => {
-      const select = buildQuery(info);
-      return createUser(input, select);
-    },
-    createGame: (_parent: any, { input }: any, _context: any, info: GraphQLResolveInfo) => {
-      const select = buildQuery(info);
-      return createGame(input, select);
-    },
-    login: (_parent: any, { input }: any, _context: any) => {
+    createUser: (_parent: unknown, { input }: any, _context: unknown, info: GraphQLResolveInfo) => 
+      createUser(input, buildQuery(info)),
+    createGame: (_parent: unknown, { input }: any, _context: unknown, info: GraphQLResolveInfo) => 
+      createGame(input, buildQuery(info)),
+    login: (_parent: unknown, { input }: any, _context: unknown) => {
       const { username, password } = input;
       return login(username, password);
     }
