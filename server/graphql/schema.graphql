@@ -6,6 +6,7 @@ input CreateUserInput {
   name: String! @constraint(pattern: "^[0-9a-zA-Z ]*$", maxLength: 255)
   password: String! @constraint(maxLength: 255, minLength: 8)
 }
+
 input CreateGameInput {
   creatorId: String!
   dimensions: Int!
@@ -50,6 +51,8 @@ type Mutation {
   login(input: LoginInput): String!
   createUser(input: CreateUserInput): User! @auth(roles: ["USER"])
   createGame(input: CreateGameInput): Game! @auth(roles: ["USER"])
+  archiveGame(id: ID!): Game @auth(roles: ["USER"])
+  joinGame(gameId: ID!, joinerId: ID!): Game @auth(roles: ["USER"])
 }
 
 directive @auth(roles: [String!]) on FIELD_DEFINITION
