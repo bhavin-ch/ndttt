@@ -31,3 +31,5 @@ export enum ErrorCodes {
   NOT_FOUND = 'NOT_FOUND',
   BAD_REQUEST = 'BAD_REQUEST',
 }
+
+export type ServerType = 'express' | 'apollo';
