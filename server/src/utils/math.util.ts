@@ -1,0 +1,1 @@
+export const generateRandBool = () => Math.random() < 0.5;
